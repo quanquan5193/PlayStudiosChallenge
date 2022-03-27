@@ -1,13 +1,9 @@
 ﻿using AutoMapper;
-using MongoDB.Bson;
 using QuestingEngine.Contract.Requests;
 using QuestingEngine.Contract.Responses;
 using QuestingEngine.Model;
 using QuestingEngine.Service.Commands;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace QuestingEngine.API.Mappers
 {

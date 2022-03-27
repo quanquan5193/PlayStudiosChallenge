@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace QuestingEngine.Model.Configuration
+﻿namespace QuestingEngine.Model.Configuration
 {
     public class LevelBonusRate
     {

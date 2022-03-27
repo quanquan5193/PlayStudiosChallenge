@@ -1,9 +1,7 @@
 ﻿using QuestingEngine.Model;
 using QuestingEngine.Repository;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace QuestingEngine.Service
@@ -31,9 +29,9 @@ namespace QuestingEngine.Service
                 return;
             }
 
-            var milestone1 = new Milestone() { Index = 1, ChipAwarded = 50, PointRequired = 50 };
-            var milestone2 = new Milestone() { Index = 2, ChipAwarded = 100, PointRequired = 100 };
-            var milestone3 = new Milestone() { Index = 3, ChipAwarded = 150, PointRequired = 150 };
+            var milestone1 = new Milestone() { Index = 1, ChipAwarded = 15, PointRequired = 50 };
+            var milestone2 = new Milestone() { Index = 2, ChipAwarded = 20, PointRequired = 100 };
+            var milestone3 = new Milestone() { Index = 3, ChipAwarded = 25, PointRequired = 150 };
 
             milestone1.Id = await _milestoneRepository.CreateAsync(milestone1);
             milestone2.Id = await _milestoneRepository.CreateAsync(milestone2);

@@ -1,16 +1,12 @@
 ﻿using AutoMapper;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using QuestingEngine.Contract.Requests;
 using QuestingEngine.Contract.Responses;
 using QuestingEngine.Model.Configuration;
-using QuestingEngine.Service;
 using QuestingEngine.Service.Commands;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
