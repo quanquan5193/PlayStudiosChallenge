@@ -1,18 +1,18 @@
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using MongoDB.Driver;
-using QuestingEngine.Model.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using QuestingEngine.API.Filters;
+using QuestingEngine.API.Mappers;
+using QuestingEngine.Repository;
+using QuestingEngine.Service;
+using QuestingEngine.Service.Commands;
+using System.Reflection;
 
 namespace QuestingEngine.API
 {
@@ -39,11 +39,28 @@ namespace QuestingEngine.API
                     return client.GetDatabase(databaseName);
                 });
 
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new Mapping());
+            });
+            var mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services
+                .AddMediatR(typeof(UpdateProgressCommand).GetTypeInfo().Assembly)
+                .AddScoped<IMilestoneRepository, MilestoneRepository>()
+                .AddScoped<IQuestRepository, QuestRepository>()
+                .AddScoped<IPlayerRepository, PlayerRepository>()
+                .AddScoped<ISeedDataService, SeedDataService>();
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "QuestingEngine.API", Version = "v1" });
             });
+
+            services.AddControllersWithViews(options =>
+                options.Filters.Add<ApiExceptionFilterAttribute>());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
