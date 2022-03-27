@@ -30,7 +30,7 @@ namespace QuestingEngine.Service.Commands
             var response = new PlayerStateResponse();
             response.TotalQuestPercentCompleted = (int)(((float)player.QuestPointsEarned / player.CurrentQuest.CompletedPoint) * 100);
             response.TotalQuestPercentCompleted = response.TotalQuestPercentCompleted < 100 ? response.TotalQuestPercentCompleted : 100;
-            response.LastMilestoneIndexCompleted = player.CompletedMilestones.OrderBy(x => x.Index).LastOrDefault()?.Index;
+            response.LastMilestoneIndexCompleted = player.CompletedMilestones?.OrderBy(x => x.Index).LastOrDefault()?.Index;
 
             return response;
         }
