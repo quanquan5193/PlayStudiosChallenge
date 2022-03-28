@@ -16,13 +16,13 @@ namespace QuestingEngine.API.Controllers
     [ApiController]
     public class ProgressController : ControllerBase
     {
-        private readonly QuestConfiguration questConfiguration;
+        private readonly QuestConfiguration _questConfiguration;
         private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
         public ProgressController(IConfiguration configuration, IMediator mediator, IMapper mapper)
         {
-            questConfiguration = configuration.GetSection("QuestConfiguration").Get<QuestConfiguration>();
+            _questConfiguration = configuration.GetSection("QuestConfiguration").Get<QuestConfiguration>();
             _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
@@ -30,8 +30,8 @@ namespace QuestingEngine.API.Controllers
         [HttpPost]
         public async Task<ActionResult<ProgressResponse>> UpdateProgress(ProgressRequest request)
         {
-            var levelBonusRate = questConfiguration.LevelBonusRates?.FirstOrDefault(x => x.Level == request.PlayerLevel)?.Rate ?? 0;
-            var questPointsEarned = Math.Floor((request.ChipAmountBet * questConfiguration.RateFromBet) + (request.PlayerLevel * levelBonusRate));
+            var levelBonusRate = _questConfiguration?.LevelBonusRates?.FirstOrDefault(x => x.Level == request.PlayerLevel)?.Rate ?? 1;
+            var questPointsEarned = Math.Floor((request.ChipAmountBet * (_questConfiguration?.RateFromBet ?? 1)) + (request.PlayerLevel * levelBonusRate));
 
             var command = _mapper.Map<UpdateProgressCommand>(request);
             command.QuestPointsEarned = (int)questPointsEarned;
